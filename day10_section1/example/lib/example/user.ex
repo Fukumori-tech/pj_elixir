@@ -21,6 +21,7 @@ defmodule Example.User do
     |> validate_required([:first_name, :last_name])
     #自分で作った関数
     |> validate_email()
+    |> validate_last_name()
   end
 
   defp validate_email(cs) do
@@ -35,6 +36,16 @@ defmodule Example.User do
     #正規表現使ってフォーマットチェック
     |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "Must
 include the @ symbol, do not include spaces.")
+  end
+
+  defp validate_last_name(cs) do
+    last_name = get_field(cs, :last_name)
+
+    if last_name in ~w(Sato Suzuki Takasi Tanaka Ito) do
+      cs
+    else
+      add_error(cs, :last_name, "Please use the last name specified.")
+    end
   end
 
   def sample_changeset(user, params \\ %{}) do

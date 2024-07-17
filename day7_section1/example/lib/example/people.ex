@@ -1,14 +1,14 @@
 #DTOみたいなもの、テーブルのデータ（レコード）をelixirで扱えるようにするためのファイル
 #Elixirで使いたい奴だけ
-defmodule Example.User do
+defmodule Example.People do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "users" do
+  schema "peoples" do
     field :first_name, :string
     field :last_name, :string
-    field :age, :integer
-    field :email, :string
+    field :sns_address, :string
+    field :tel, :string
 
     timestamps()
   end
@@ -16,24 +16,24 @@ defmodule Example.User do
   def changeset(user, params \\ %{}) do
     user
     #変更したり、変更する箇所決めたりして変更後のcs返す
-    |> cast(params, [:first_name, :last_name, :age,  :email])
+    |> cast(params, [:first_name, :last_name, :sns_address, :tel])
     #なぜ年齢はチェックしない？->null禁止してないから？
     |> validate_required([:first_name, :last_name])
     #自分で作った関数
-    |> validate_email()
+    |> validate_sns_address()
   end
 
-  defp validate_email(cs) do
+  defp validate_sns_address(cs) do
     cs
     #null, 空文字チェック
-    |> validate_required(:email, message: "Please enter your email")
+    |> validate_required(:sns_address, message: "Please enter your sns_address")
     #データ登録時にエラー文出す
-    |> unique_constraint(:email, message: "already retrieved")
+    |> unique_constraint(:sns_address, message: "already retrieved")
     #呼び出し元の関数実行した時点でエラー文出す
-    |> unsafe_validate_unique(:email, Example.Repo, message: "Email has
+    |> unsafe_validate_unique(:sns_address, Example.Repo, message: "Sns address has
     already been retrieved.")
     #正規表現使ってフォーマットチェック
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "Must
+    |> validate_format(:sns_address, ~r/^[^\s]+@[^\s]+$/, message: "Must
 include the @ symbol, do not include spaces.")
   end
 
