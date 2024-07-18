@@ -5,6 +5,7 @@ defmodule EctoTransaction.Item do
   schema "items" do
     field :name, :string
     field :price, :integer, default: 0
+       many_to_many :users, EctoTransaction.User, join_through: "get_items"
   end
 
   def changeset(item, params) do

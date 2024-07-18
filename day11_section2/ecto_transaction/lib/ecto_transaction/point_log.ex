@@ -11,7 +11,7 @@ defmodule EctoTransaction.PointLog do
 
   def changeset(point_log, params) do
     point_log
-    |> cast(params, [:cagtegory, :amount, :point_balance, :user_id])
+    |> cast(params, [:category, :amount, :point_balance, :user_id])
     |> validate_required(:category, message: "Please enter your category.")
     |> validate_inclusion(:category, ~w(give use), message: "Please enter give or use.")
     |> validate_required(:amount, message: "Please enter your amount.")
