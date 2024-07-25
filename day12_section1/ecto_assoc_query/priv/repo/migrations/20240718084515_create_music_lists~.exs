@@ -1,7 +1,7 @@
 #music_list（アーティスト側のリスト）を管理するテーブルを作る
 #
 # artists 対　music_lists 　一対0..他
-defmodule :"Elixir.EctoAssocQuery.Repo.Migrations.CreateMusicLists~" do
+defmodule EctoAssocQuery.Repo.Migrations.CreateMusicLists do
   use Ecto.Migration
 
   def change do
